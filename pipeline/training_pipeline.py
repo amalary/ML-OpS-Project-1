@@ -6,9 +6,9 @@ from config.paths_config import  *
 
 
 if __name__ == "__main__": 
-    
-    ### 1. Data Ingestion 
 
+    ### 1. Data Ingestion 
+    
     data_ingeston = DataIngestion(read_yaml(CONFIG_PATH))
     data_ingeston.run()
 
