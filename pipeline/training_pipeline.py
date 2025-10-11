@@ -8,7 +8,7 @@ from config.paths_config import  *
 if __name__ == "__main__": 
 
     ### 1. Data Ingestion 
-    
+
     data_ingeston = DataIngestion(read_yaml(CONFIG_PATH))
     data_ingeston.run()
 
@@ -20,4 +20,4 @@ if __name__ == "__main__":
     ### 3. Model Training 
 
     trainer = ModelTraining(PROCESSED_TRAIN_DATA_PATH,PROCESSED_TEST_DATA_PATH,MODEL_OUTPUT_PATH) 
-    trainer.run()
+    trainer.run() 
