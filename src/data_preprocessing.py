@@ -151,8 +151,7 @@ class DataProcessor:
             logger.error(f"Error during preprocessing pipeline {e}")
             raise CustomException("Error while data preprocessing pipeline", e)
               
-    
-    
+              
 if __name__=="__main__":
     processor = DataProcessor(TRAIN_FILE_PATH,TEST_FILE_PATH,PROCESSED_DIR,CONFIG_PATH)
     processor.process()       
