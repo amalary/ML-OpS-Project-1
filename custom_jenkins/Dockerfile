@@ -22,3 +22,12 @@ https://download.docker.com/linux/debian ${VERSION_CODENAME} stable" \
 
 # Drop back to the Jenkins user
 USER jenkins
+
+
+
+#docker run -d --name jenkins-dind ^ 
+#--privileged ^ 
+#-p 8080:8080 -p 5000:5000 ^ 
+# -v //var/run/docker.sock:/var/run/docker.sock ^ 
+# -v jenkins_home:/var/jenkins_home ^ 
+# jenkins-dind -

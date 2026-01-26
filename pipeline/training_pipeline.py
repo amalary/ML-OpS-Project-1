@@ -12,7 +12,7 @@ if __name__ == "__main__":
     data_ingeston = DataIngestion(read_yaml(CONFIG_PATH))
     data_ingeston.run()
 
-    ### Data Processing 
+    ### 2. Data Processing 
 
     processor = DataProcessor(TRAIN_FILE_PATH,TEST_FILE_PATH,PROCESSED_DIR,CONFIG_PATH)
     processor.process()    
@@ -21,3 +21,6 @@ if __name__ == "__main__":
 
     trainer = ModelTraining(PROCESSED_TRAIN_DATA_PATH,PROCESSED_TEST_DATA_PATH,MODEL_OUTPUT_PATH) 
     trainer.run() 
+
+
+    

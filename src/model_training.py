@@ -42,7 +42,6 @@ class ModelTraining:
             X_test = test_df.drop(columns = ["booking_status"])
             y_test = test_df["booking_status"]
 
-
             logger.info("Data split successfully for Model Training")
 
             return X_train, y_train, X_test, y_test
