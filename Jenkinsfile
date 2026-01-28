@@ -8,6 +8,7 @@ pipeline {
     AR_REPO     = 'app-repo'
     IMAGE_NAME  = 'mlops-project'
     IMAGE_TAG   = 'latest'
+    GCR_HOST    = 'gcr.io'
   }
 
   stages {
@@ -60,6 +61,30 @@ pipeline {
               # Build + push to Artifact Registry (all lowercase image name)
               docker build -t ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT}/${AR_REPO}/${IMAGE_NAME}:${IMAGE_TAG} .
               docker push ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT}/${AR_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
+            """
+          }
+        }
+      }
+    }
+
+    stage('Building and Pushing Docker Image to GCR') {
+      steps {
+        withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          script {
+            echo 'Building and Pushing Docker Image to GCR.................'
+            sh """
+              set -e
+
+              # Authenticate gcloud with service account
+              gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
+              gcloud config set project "${GCP_PROJECT}"
+
+              # Configure Docker credential helper for GCR
+              gcloud auth configure-docker ${GCR_HOST} --quiet
+
+              # Build + push to GCR
+              docker build -t ${GCR_HOST}/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG} .
+              docker push ${GCR_HOST}/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}
             """
           }
         }
