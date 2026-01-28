@@ -6,7 +6,7 @@ pipeline {
     GCP_PROJECT = 'machinelearning-ops2025'
     AR_LOCATION = 'us'
     AR_REPO     = 'app-repo'
-    IMAGE_NAME  = 'mlops-project'   // MUST be lowercase
+    IMAGE_NAME  = 'mlops-project'
     IMAGE_TAG   = 'latest'
   }
 
@@ -55,7 +55,7 @@ pipeline {
               gcloud config set project "${GCP_PROJECT}"
 
               # Configure Docker credential helper for Artifact Registry
-              gcloud auth configure-docker ${AR_LOCATION}-docker.pkg.dev --quiet
+              gcloud auth configure-docker ${AR_LOCATION}-docker.pkg.dev --quiet 
 
               # Build + push to Artifact Registry (all lowercase image name)
               docker build -t ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT}/${AR_REPO}/${IMAGE_NAME}:${IMAGE_TAG} .
