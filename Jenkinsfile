@@ -6,11 +6,11 @@ pipeline {
     GCP_PROJECT = 'machinelearning-ops2025'
     AR_LOCATION = 'us'
     AR_REPO     = 'app-repo'
-    IMAGE_NAME  = 'mlops-project'
+    IMAGE_NAME  = 'demo-flask-app'
     IMAGE_TAG   = 'latest'
     GCR_HOST    = 'gcr.io'
     CLOUD_RUN_REGION = 'us-central1'
-    CLOUD_RUN_SERVICE = 'chess-backend'
+    CLOUD_RUN_SERVICE = 'demo-flask-app'
   }
 
   stages {
@@ -88,9 +88,6 @@ pipeline {
                 --platform managed \
                 --allow-unauthenticated
             """
-          }
-        }
-      }
     }
 
     stage('Building and Pushing Docker Image to GCR') {
@@ -116,5 +113,9 @@ pipeline {
         }
       }
     }
+  }
+}
+    }
+
   }
 }
