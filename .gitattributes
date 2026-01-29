@@ -1,3 +1,4 @@
 *.py text eol=lf
 Dockerfile text eol=lf
 Jenkinsfile text eol=lf
+.gitattributes text eol=lf
