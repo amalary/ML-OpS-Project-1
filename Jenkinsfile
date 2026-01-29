@@ -88,6 +88,9 @@ pipeline {
                 --platform managed \
                 --allow-unauthenticated
             """
+          }
+        }
+      }
     }
 
     stage('Building and Pushing Docker Image to GCR') {
@@ -113,9 +116,5 @@ pipeline {
         }
       }
     }
-  }
-}
-    }
-
   }
 }
