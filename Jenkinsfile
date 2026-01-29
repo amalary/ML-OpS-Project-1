@@ -9,6 +9,8 @@ pipeline {
     IMAGE_NAME  = 'mlops-project'
     IMAGE_TAG   = 'latest'
     GCR_HOST    = 'gcr.io'
+    CLOUD_RUN_REGION = 'us-central1'
+    CLOUD_RUN_SERVICE = 'mlops-project'
   }
 
   stages {
@@ -61,6 +63,30 @@ pipeline {
               # Build + push to Artifact Registry (all lowercase image name)
               docker build -t ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT}/${AR_REPO}/${IMAGE_NAME}:${IMAGE_TAG} .
               docker push ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT}/${AR_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
+            """
+          }
+        }
+      }
+    }
+    
+    stage('Deploying to Cloud Run') {
+      steps {
+        withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          script {
+            echo 'Deploying to Cloud Run.................'
+            sh """
+              set -e
+
+              # Authenticate gcloud with service account
+              gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
+              gcloud config set project "${GCP_PROJECT}"
+
+              # Deploy to Cloud Run using Artifact Registry image
+              gcloud run deploy ${CLOUD_RUN_SERVICE} \
+                --image ${AR_LOCATION}-docker.pkg.dev/${GCP_PROJECT}/${AR_REPO}/${IMAGE_NAME}:${IMAGE_TAG} \
+                --region ${CLOUD_RUN_REGION} \
+                --platform managed \
+                --allow-unauthenticated
             """
           }
         }
