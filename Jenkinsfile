@@ -10,7 +10,7 @@ pipeline {
     IMAGE_TAG   = 'latest'
     GCR_HOST    = 'gcr.io'
     CLOUD_RUN_REGION = 'us-central1'
-    CLOUD_RUN_SERVICE = 'mlops-project'
+    CLOUD_RUN_SERVICE = 'chess-backend'
   }
 
   stages {
